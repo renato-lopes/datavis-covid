@@ -2,12 +2,12 @@ function plot_vaccinations(state) {
   // set the dimensions and margins of the graph
   var margin = {top: 30, right: 60, bottom: 30, left: 60},
       width = 1000 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
+      height = 200 - margin.top - margin.bottom;
 
   // append the svg object to the body of the page
   var svg = d3.select("#cases-graphs")
     .append("div")
-      .classed("mb-4", true)
+      .classed("mb-2", true)
     .append("svg")
       .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
       // .attr("width", width + margin.left + margin.right)
@@ -79,7 +79,7 @@ function plot_vaccinations(state) {
         .attr("text-anchor", "middle")
         .style("font-size", "14px") 
         .style("font-family", "sans-serif")
-        .text("New Daily Cases (moving 7-day average)");
+        .text("New Daily Cases");
 
       svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -89,7 +89,7 @@ function plot_vaccinations(state) {
         .attr("text-anchor", "middle")
         .style("font-size", "14px") 
         .style("font-family", "sans-serif")
-        .text("% of population vaccinated");
+        .text("% population vaccinated");
       
       }
   )
@@ -127,3 +127,4 @@ function plot_vaccinations(state) {
 plot_vaccinations('MG')
 plot_vaccinations('SP')
 plot_vaccinations('AM')
+plot_vaccinations('CE')
