@@ -1,13 +1,13 @@
 var state = "MG";
 
-function plot_cases() {
+function plot_vaccinations() {
   // set the dimensions and margins of the graph
   var margin = {top: 10, right: 30, bottom: 30, left: 60},
       width = 1000 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
 
   // append the svg object to the body of the page
-  var svg = d3.select("#covid_cases")
+  var svg = d3.select("#covid_vaccination")
     .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
@@ -24,9 +24,6 @@ function plot_cases() {
       var x = d3.scaleTime()
         .domain(d3.extent(data, function(d) { return d.date; }))
         .range([ 0, width ]);
-      svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
     
       // Add Y axis
       var y = d3.scaleLinear()
@@ -47,22 +44,6 @@ function plot_cases() {
         )
     }
   )
-}
-
-function plot_vaccinations() {
-  // set the dimensions and margins of the graph
-  var margin = {top: 10, right: 30, bottom: 30, left: 60},
-      width = 1000 - margin.left - margin.right,
-      height = 400 - margin.top - margin.bottom;
-
-  // append the svg object to the body of the page
-  var svg = d3.select("#covid_vaccination")
-    .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")"); 
 
   d3.csv(`data/covid/states/${state}.csv`, function(d){
     d.date = d3.timeParse("%Y-%m-%d")(d.date);
@@ -78,15 +59,16 @@ function plot_vaccinations() {
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x))
       .selectAll("text")
-        .attr("transform", "translate(-10,0)rotate(-45)")
-        .style("text-anchor", "end");
+        // .attr("transform", "translate(-10,0)rotate(-45)")
+        // .style("text-anchor", "end");
 
       // Add Y axis
       var y = d3.scaleLinear()
       .domain([0, 100])
       .range([ height, 0]);
       svg.append("g")
-      .call(d3.axisLeft(y));
+      .attr("transform", "translate(911,0)")
+      .call(d3.axisRight(y));
 
       // Bars
       svg.selectAll("firstdose")
@@ -113,6 +95,4 @@ function plot_vaccinations() {
   )
 }
 
-
-plot_cases()
 plot_vaccinations()
