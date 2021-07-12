@@ -38,7 +38,7 @@ function plot(data) {
     .attr("d", d3.line()
       .x(function(d) { return x(d.date) })
       .y(function(d) { return y(d.value) })
-      )
+    )
 }
 
 let state = "MG";
