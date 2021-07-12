@@ -5,21 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Covid-19 Visualizations</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"><!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://d3js.org/d3.v7.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/d3-scale@4" defer></script>
     <script src="covid_cases.js" defer></script>
     <style>
-        .container {
-            width: 1000px;
-            margin: auto;
+        .no-a {
+            text-decoration: none;
+            color: default;
         }
     </style>
 
 </head>
 <body>
-    <h1>Hello world!</h1>
     <div class="container">
-        <div id="covid_vaccination"></div>
+        <h1 class="text-center">Look at this graph <a class="no-a" target="_blank" href="https://www.youtube.com/watch?v=sIlNIVXpIns">📈</a></h1>
+        <div class="row mt-4">
+            <div class="col-md-10 offset-md-1" id="cases-graphs"></div>
+        </div>
     </div>
 </body>
 </html>
