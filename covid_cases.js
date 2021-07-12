@@ -73,7 +73,7 @@ function plot_vaccinations(state) {
       
       svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0-50)
+        .attr("y", 0-margin.right)
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
         .attr("text-anchor", "middle")
