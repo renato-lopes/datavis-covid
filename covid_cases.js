@@ -43,7 +43,7 @@ function plot(data) {
 
 let state = "MG";
 
-d3.csv(`data/covid/cases/${state}.csv`, function(d){
-  return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.rollingAvg }
+d3.csv(`data/covid/states/${state}.csv`, function(d){
+  return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.newDeathsRolling }
   })
   .then(plot)
