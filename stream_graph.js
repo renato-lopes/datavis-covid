@@ -1,7 +1,7 @@
 chart("data/covid/new_cases.csv", "orange", "Reported Cases in MG, SP, AM, CE, MA and PR");
-chart("data/covid/new_cases_media.csv", "orange", "(Media) Reported Cases in MG, SP, AM, CE, MA and PR");
+chart("data/covid/new_cases_media.csv", "orange", "(Rolling Avg) Reported Cases in MG, SP, AM, CE, MA and PR");
 chart("data/covid/new_deaths.csv", "pink", "Reported Deaths in MG, SP, AM, CE, MA and PR");
-chart("data/covid/new_deaths_media.csv", "pink", "(Media)Teste Reported Deaths in MG, SP, AM, CE, MA and PR");
+chart("data/covid/new_deaths_media.csv", "pink", "(Rolling Avg) Reported Deaths in MG, SP, AM, CE, MA and PR");
 var datearray = [];
 var colorrange = [];
 
