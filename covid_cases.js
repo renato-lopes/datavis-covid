@@ -230,7 +230,7 @@ function plot_vaccine_type(parent, state) {
   )
 }
 
-let states = ['MA', 'PR', 'MG', 'CE'];
+let states = ['MA', 'AM', 'PR', 'SP', 'MG', 'CE'];
 
 for (const state of states) {
   parent = d3.select("#cases-graphs").append('div').classed('row', 'true');
