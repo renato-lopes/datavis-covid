@@ -94,7 +94,7 @@ function plot_vaccinations(parent, state) {
       }
   )
   d3.csv(`data/covid/states/${state}.csv`, function(d){
-    return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.newDeathsRolling }
+    return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.newCasesRolling }
     })
     .then(function (data) {
       // Add X axis --> it is a date format
@@ -105,6 +105,7 @@ function plot_vaccinations(parent, state) {
       // Add Y axis
       var y = d3.scaleLinear()
         .domain([0, d3.max(data, function(d) { return +d.value; })])
+        // .domain([0, 300])
         .range([ height, 0 ]);
       svg.append("g")
         .call(d3.axisLeft(y));
@@ -142,6 +143,24 @@ function process_vaccine_name(name) {
   }
 }
 
+function prepare_vaccine_data(data) {
+  let i = -1;
+  let newArray = [];
+  for (let j = 0; j<data.length; j++) {
+    if (data[j].name === "Astrazeneca" ) {
+      if (i === -1) {
+        i = j;
+        newArray.push(data[j]);
+      } else {
+        newArray[i].percentage += data[j].percentage
+      }
+    } else {
+      newArray.push(data[j]);
+    }
+  }
+  return newArray;
+}
+
 function plot_vaccine_type(parent, state) {
   // set the dimensions and margins of the graph
   var margin = {top: 30, right: 30, bottom: 50, left: 30},
@@ -162,9 +181,10 @@ function plot_vaccine_type(parent, state) {
             "translate(" + margin.left + "," + margin.top + ")"); 
 
   d3.csv(`data/vacina/vacinas.csv`, function(d){
-    if (d.vacina_nome !== "Pendente Identificação") { return { name: process_vaccine_name(d.vacina_nome), percentage: d[state] }; }
+    if (d.vacina_nome !== "Pendente Identificação") { return { name: process_vaccine_name(d.vacina_nome), percentage: parseFloat(d[state]) }; }
     })
     .then(function (data) {
+      data = prepare_vaccine_data(data);
       // X axis
       var x = d3.scaleBand()
         .range([ 0, width ])
@@ -186,7 +206,7 @@ function plot_vaccine_type(parent, state) {
       .call(d3.axisRight(y));
 
       // Bars
-      svg.selectAll("firstdose")
+      svg.selectAll("vaccines")
       .data(data)
       .enter()
       .append("rect")
@@ -196,40 +216,21 @@ function plot_vaccine_type(parent, state) {
         .attr("height", function(d) { return height - y(d.percentage); })
         .attr("fill", "#1766db")
       
-      // // Title
-      // svg.append("text")
-      //   .attr("x", (width / 2))             
-      //   .attr("y", -16)
-      //   .attr("text-anchor", "middle")  
-      //   .style("font-size", "16px") 
-      //   .style("font-family", "sans-serif")
-      //   .text(`Effects of Vaccination on Reported Cases in ${state}`);
-      
-      // svg.append("text")
-      //   .attr("transform", "rotate(-90)")
-      //   .attr("y", 0-margin.right)
-      //   .attr("x",0 - (height / 2))
-      //   .attr("dy", "1em")
-      //   .attr("text-anchor", "middle")
-      //   .style("font-size", "14px") 
-      //   .style("font-family", "sans-serif")
-      //   .text("New Daily Cases");
-
-      // svg.append("text")
-      //   .attr("transform", "rotate(-90)")
-      //   .attr("y", width+36)
-      //   .attr("x",0 - (height / 2))
-      //   .attr("dy", "1em")
-      //   .attr("text-anchor", "middle")
-      //   .style("font-size", "14px") 
-      //   .style("font-family", "sans-serif")
-      //   .text("% population vaccinated");
+      svg.selectAll(".labels")        
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("class","label")
+        .attr("x", (function(d) { return x(d.name); }  ))
+        .attr("y", function(d) { return y(d.percentage) - 15; })
+        .attr("dy", ".75em")
+        .text(function(d) { return d.percentage.toFixed(1); }); 
       
       }
   )
 }
 
-let states = ['MG', 'SP', 'AM', 'CE', 'PR'];
+let states = ['MA', 'PR', 'MG', 'CE'];
 
 for (const state of states) {
   parent = d3.select("#cases-graphs").append('div').classed('row', 'true');
