@@ -152,7 +152,7 @@ function prepare_vaccine_data(data) {
         i = j;
         newArray.push(data[j]);
       } else {
-        newArray[i].percentage += data[j].percentage
+        newArray[i].percentage = (newArray[i].percentage || 0) + (data[j].percentage || 0)
       }
     } else {
       newArray.push(data[j]);
