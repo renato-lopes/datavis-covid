@@ -296,9 +296,26 @@ function draw_state(parent, state) {
 let states = ['MA', 'AM', 'PR', 'SP', 'MG', 'CE', 'DF', 'RS'];
 
 for (const state of states) {
-  parent = d3.select("#cases-graphs").append('div').classed('row', 'true').classed("mb-4", "true").classed("graph_row", "true");
+  parent = d3.select("#cases-graphs").append('div').classed('row', 'true').attr("id", state+"-graph").classed("mb-4", "true").classed("graph_row", "true");
   parent.append('div').classed('bottomright', 'true').append('p').text(state);
   draw_state(parent, state);
   plot_vaccinations(parent, state);
   plot_vaccine_type(parent, state);
+}
+
+for (const state of states.sort()) {
+  let div = d3.select(".state-selection").append("div").classed("form-check", "true").classed("form-check-inline", "true");
+  div.append("input").classed("form-check-input", 'true').attr("type", "checkbox").attr("id", state).attr("value", "").property("checked", "true").attr("onchange", "updateStates();");
+  div.append("label").classed("form-check-label", 'true').attr("for", state).text(state);
+}
+
+function updateStates() {
+  for (const state of states) {
+    if (d3.select("#"+state).property("checked") === true) {
+      console.log("#"+state+"-graph");
+      d3.select("#"+state+"-graph").classed("d-md-none", false);
+    } else {
+      d3.select("#"+state+"-graph").classed("d-md-none", true);
+    }
+  }
 }
