@@ -7,7 +7,7 @@ function plot_vaccinations(parent, state) {
   // append the svg object to the body of the page
   var svg = parent
     .append("div")
-      .classed("col-md-10", true)
+      .classed("col-md-8", true)
       .classed("mb-2", true)
     .append("svg")
       .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
@@ -230,10 +230,74 @@ function plot_vaccine_type(parent, state) {
   )
 }
 
-let states = ['MA', 'AM', 'PR', 'SP', 'MG', 'CE'];
+function draw_state(parent, state) {
+  // set the dimensions and margins of the graph
+  var margin = {top: 30, right: 30, bottom: 50, left: 30},
+      width = 200 - margin.left - margin.right,
+      height = 200 - margin.top - margin.bottom;
+
+  // append the svg object to the body of the page
+  var svg = parent
+    .append("div")
+      .classed("col-md-2", true)
+      .classed("mb-2", true)
+    .append("svg")
+      .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+      // .attr("width", width + margin.left + margin.right)
+      // .attr("height", height + margin.top + margin.bottom)
+    .call(d3.zoom()
+      .on('zoom', (event, feature) => {
+        svg.style("stroke-width", 1.5 / event.transform.k + "px");
+        svg.attr('transform', event.transform);
+      })
+      .scaleExtent([1, 5])
+    )
+    .append("g")
+      .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")"); 
+
+  d3.json("br-states.json")
+    .then(data => {
+      var states = topojson.feature(data, data.objects.estados);
+      var states_contour = topojson.mesh(data, data.objects.estados);
+
+      var projection = d3.geoMercator()
+          .scale(200)
+          .center([-52, -15])
+          .translate([width / 2, height / 2]);
+      
+      var path = d3.geoPath()
+          .projection(projection);
+
+
+      // Desenhando estados
+      svg.selectAll(".estado")
+          .data(states.features)
+          .enter()
+          .append("path")
+          .attr("class", "state")
+          .attr("d", path);
+
+      // Destaca estado
+      svg.selectAll(".estado")
+          .data([states.features.find(element => element.id === state)])
+          .enter()
+          .append("path")
+          .attr("class", "state-highlighted")
+          .attr("d", path);
+
+      svg.append("path")
+          .datum(states_contour)
+          .attr("d", path)
+          .attr("class", "state_contour");
+  });
+}
+
+let states = ['MA', 'AM', 'PR', 'SP', 'MG', 'CE', 'DF', 'RS'];
 
 for (const state of states) {
   parent = d3.select("#cases-graphs").append('div').classed('row', 'true');
+  draw_state(parent, state);
   plot_vaccinations(parent, state);
   plot_vaccine_type(parent, state);
 }
