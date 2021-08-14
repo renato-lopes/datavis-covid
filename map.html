@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        .state {
+          fill: #ddc;
+          fill-opacity: 0.1;
+        }
+
+        .state-highlighted {
+            fill: red;
+        }
+        
+        .state_contour {
+          fill: none;
+          stroke: black;
+          stroke-linejoin: round;
+        }
+        
+    </style>
+</head>
+<body>
+    <svg></svg>
+</body>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-scale@4"></script>
+<script src="https://d3js.org/topojson.v1.min.js"></script>
+<script>
+    d3.json("br-states.json")
+    .then(data => {
+        console.log(data);
+        var width = 1000;
+        var height = 1000;
+        var svg = d3.select("svg")
+        .attr("width",width)
+        .attr("height",height);
+
+        var g = svg.append("g");
+
+        var projection = d3.geoMercator()
+            .scale(1000)
+            .center([-52, -15])
+            .translate([width / 2, height / 2]);
+        
+        var path = d3.geoPath()
+            .projection(projection);
+
+        var states = topojson.feature(data, data.objects.estados);
+        var states_contour = topojson.mesh(data, data.objects.estados);
+
+        // Desenhando estados
+        g.selectAll(".estado")
+            .data(states.features)
+            .enter()
+            .append("path")
+            .attr("class", "state")
+            .attr("d", path);
+
+        // Destaca estado
+        var state = "SP";
+        g.selectAll(".estado")
+            .data([states.features.find(element => element.id === state)])
+            .enter()
+            .append("path")
+            .attr("class", "state-highlighted")
+            .attr("d", path);
+
+        g.append("path")
+            .datum(states_contour)
+            .attr("d", path)
+            .attr("class", "state_contour");
+    });
+</script>
+</html>

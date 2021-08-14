@@ -63,13 +63,13 @@ function plot_vaccinations(parent, state) {
           .attr("fill", "#0c7af0")
       
       // Title
-      svg.append("text")
-        .attr("x", (width / 2))             
-        .attr("y", -16)
-        .attr("text-anchor", "middle")  
-        .style("font-size", "16px") 
-        .style("font-family", "sans-serif")
-        .text(`Effects of Vaccination on Reported Cases in ${state}`);
+      // svg.append("text")
+      //   .attr("x", (width / 2))             
+      //   .attr("y", -16)
+      //   .attr("text-anchor", "middle")  
+      //   .style("font-size", "16px") 
+      //   .style("font-family", "sans-serif")
+      //   .text(`Effects of Vaccination on Reported Cases in ${state}`);
       
       svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -214,7 +214,7 @@ function plot_vaccine_type(parent, state) {
         .attr("y", function(d) { return y(d.percentage); })
         .attr("width", x.bandwidth())
         .attr("height", function(d) { return height - y(d.percentage); })
-        .attr("fill", "#1766db")
+        .attr("fill", "#2ade5a")
       
       svg.selectAll(".labels")        
         .data(data)
