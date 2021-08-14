@@ -296,7 +296,8 @@ function draw_state(parent, state) {
 let states = ['MA', 'AM', 'PR', 'SP', 'MG', 'CE', 'DF', 'RS'];
 
 for (const state of states) {
-  parent = d3.select("#cases-graphs").append('div').classed('row', 'true');
+  parent = d3.select("#cases-graphs").append('div').classed('row', 'true').classed("mb-4", "true").classed("graph_row", "true");
+  parent.append('div').classed('bottomright', 'true').append('p').text(state);
   draw_state(parent, state);
   plot_vaccinations(parent, state);
   plot_vaccine_type(parent, state);
