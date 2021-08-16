@@ -23,10 +23,11 @@ function streamgraph(csvpath, title, caselabel, Ydomain) {
     return d;
   })
     .then(function (data) {
+
+     
       // List of groups = header of the csv files
       var keys = data.columns.slice(1)
-
-
+      
       // Add X axis
       var x = d3.scaleTime()
         .domain(d3.extent(data, function (d) { return d.day; }))
@@ -70,7 +71,7 @@ function streamgraph(csvpath, title, caselabel, Ydomain) {
         d3.select(this)
           // .style("stroke", "black")
           .style("opacity", 1)
-        d3.event.stopPropagation();
+
       }
 
       var mousemove = function (d, i) {
@@ -188,7 +189,7 @@ function streamgraph(csvpath, title, caselabel, Ydomain) {
 }
 
 
-streamgraph("data/covid/new_cases.csv", "Reported Cases in MG, SP, AM, CE, MA and PR", 'Cases', [-30000, 30000]);
-streamgraph("data/covid/new_cases_media.csv", "(Rolling Avg) Reported Cases in MG, SP, AM, CE, MA and PR", 'Cases', [-30000, 30000]);
-streamgraph("data/covid/new_deaths.csv", "Reported Deaths in MG, SP, AM, CE, MA and PR", 'Deaths', [-2000, 2000]);
-streamgraph("data/covid/new_deaths_media.csv", "(Rolling Avg) Reported Deaths in MG, SP, AM, CE, MA and PR", 'Deaths', [-2000, 2000]);
+streamgraph("data/covid/new_cases.csv", "Reported Cases", 'Cases', [-60000, 60000]);
+streamgraph("data/covid/new_cases_media.csv", "(Rolling Avg) Reported Cases", 'Cases', [-60000, 60000]);
+streamgraph("data/covid/new_deaths.csv", "Reported Deaths", 'Deaths', [-2000, 2000]);
+streamgraph("data/covid/new_deaths_media.csv", "(Rolling Avg) Reported Deaths", 'Deaths', [-2000, 2000]);
