@@ -133,7 +133,13 @@ function plot_vaccinations(parent, state) {
           .style("opacity", 0)
 
       // Create the text that travels along the curve of chart
-      var focusText = svg
+      var focusText1 = svg
+        .append('g')
+        .append('text')
+          .style("opacity", 0)
+          .attr("text-anchor", "left")
+          .attr("alignment-baseline", "middle")
+      var focusText2 = svg
         .append('g')
         .append('text')
           .style("opacity", 0)
@@ -153,7 +159,8 @@ function plot_vaccinations(parent, state) {
       // What happens when the mouse move -> show the annotations at the right positions.
       function mouseover() {
         focus.style("opacity", 1)
-        focusText.style("opacity",1)
+        focusText1.style("opacity",1)
+        focusText2.style("opacity",1)
       }
 
       function mousemove(d, i) {
@@ -162,15 +169,18 @@ function plot_vaccinations(parent, state) {
         mousex = mousex[0];
         var x0 = x.invert(mousex);
         var i = bisect(data, x0, 1);
-        console.log(i);
         selectedData = data[i]
         focus
           .attr("cx", x(selectedData.date))
           .attr("cy", y(selectedData.value))
-        focusText
-          .html("x:" + selectedData.date.toLocaleDateString('pt-BR') + " " + "y:" + Math.ceil(selectedData.value))
-          .attr("x", d3.max([d3.min([x(selectedData.date), width - 150]), 0]))
+        focusText1
+          .html(selectedData.date.toLocaleDateString('pt-BR'))
+          .attr("x", d3.max([d3.min([x(selectedData.date), width - 150]), 0]) + 10)
           .attr("y", y(selectedData.value))
+        focusText2
+          .html(Math.ceil(selectedData.value))
+          .attr("x", d3.max([d3.min([x(selectedData.date), width - 150]), 0]) + 10)
+          .attr("y", y(selectedData.value)+15)
       }
       
       function mouseout() {
