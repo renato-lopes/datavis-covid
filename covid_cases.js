@@ -120,6 +120,64 @@ function plot_vaccinations(parent, state) {
           .x(function(d) { return x(d.date) })
           .y(function(d) { return y(d.value) })
         )
+      // This allows to find the closest X index of the mouse:
+      var bisect = d3.bisector(function(d) { return d.date; }).left;
+
+      // Create the circle that travels along the curve of chart
+      var focus = svg
+        .append('g')
+        .append('circle')
+          .style("fill", "black")
+          .attr("stroke", "black")
+          .attr('r', 3)
+          .style("opacity", 0)
+
+      // Create the text that travels along the curve of chart
+      var focusText = svg
+        .append('g')
+        .append('text')
+          .style("opacity", 0)
+          .attr("text-anchor", "left")
+          .attr("alignment-baseline", "middle")
+      // Create a rect on top of the svg area: this rectangle recovers mouse position
+      svg
+        .append('rect')
+        .style("fill", "none")
+        .style("pointer-events", "all")
+        .attr('width', width)
+        .attr('height', height)
+        .on('mouseover', mouseover)
+        .on('mousemove', mousemove)
+        .on('mouseout', mouseout);
+      
+      // What happens when the mouse move -> show the annotations at the right positions.
+      function mouseover() {
+        focus.style("opacity", 1)
+        focusText.style("opacity",1)
+      }
+
+      function mousemove(d, i) {
+        // recover coordinate we need
+        var mousex = d3.pointer(d);
+        mousex = mousex[0];
+        var x0 = x.invert(mousex);
+        var i = bisect(data, x0, 1);
+        console.log(i);
+        selectedData = data[i]
+        focus
+          .attr("cx", x(selectedData.date))
+          .attr("cy", y(selectedData.value))
+        focusText
+          .html("x:" + selectedData.date.toLocaleDateString('pt-BR') + " " + "y:" + Math.ceil(selectedData.value))
+          .attr("x", d3.max([d3.min([x(selectedData.date), width - 150]), 0]))
+          .attr("y", y(selectedData.value))
+      }
+      
+      function mouseout() {
+        focus.style("opacity", 0)
+        focusText.style("opacity", 0)
+      }
+
     }
   )
 }
