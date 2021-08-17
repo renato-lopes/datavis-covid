@@ -137,13 +137,13 @@ function plot_vaccinations(parent, state) {
         .append('g')
         .append('text')
           .style("opacity", 0)
-          .attr("text-anchor", "left")
+          .attr("text-anchor", "middle")
           .attr("alignment-baseline", "middle")
       var focusText2 = svg
         .append('g')
         .append('text')
           .style("opacity", 0)
-          .attr("text-anchor", "left")
+          .attr("text-anchor", "middle")
           .attr("alignment-baseline", "middle")
       // Create a rect on top of the svg area: this rectangle recovers mouse position
       svg
@@ -175,12 +175,12 @@ function plot_vaccinations(parent, state) {
           .attr("cy", y(selectedData.value))
         focusText1
           .html(selectedData.date.toLocaleDateString('pt-BR'))
-          .attr("x", d3.max([d3.min([x(selectedData.date), width - 150]), 0]) + 10)
-          .attr("y", y(selectedData.value))
+          .attr("x", d3.max([d3.min([x(selectedData.date), width - 50]), 50]))
+          .attr("y", d3.max([y(selectedData.value)-40, 20]))
         focusText2
           .html(Math.ceil(selectedData.value))
-          .attr("x", d3.max([d3.min([x(selectedData.date), width - 150]), 0]) + 10)
-          .attr("y", y(selectedData.value)+15)
+          .attr("x", d3.max([d3.min([x(selectedData.date), width - 50]), 50]))
+          .attr("y", d3.max([y(selectedData.value)-20, 40]))
       }
       
       function mouseout() {
