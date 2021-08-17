@@ -3,7 +3,7 @@ function streamgraph(csvpath, title, caselabel, Ydomain) {
 
   // set the dimensions and margins of the graph
   var margin = { top: 20, right: 70, bottom: 60, left: 60 };
-  var width = document.body.clientWidth - margin.left - margin.right;
+  var width = 1300 - margin.left - margin.right;
   var height = 400 - margin.top - margin.bottom;
 
   // append the svg object to the body of the page
