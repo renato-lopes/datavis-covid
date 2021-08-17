@@ -185,7 +185,8 @@ function plot_vaccinations(parent, state) {
       
       function mouseout() {
         focus.style("opacity", 0)
-        focusText.style("opacity", 0)
+        focusText1.style("opacity", 0)
+        focusText2.style("opacity", 0)
       }
 
     }
