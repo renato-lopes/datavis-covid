@@ -22,12 +22,13 @@ function plot_vaccinations(parent, state) {
       return d;
     }),
     d3.csv(`data/covid/states/${state}.csv`, function(d){
-      return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.newCasesRolling }
+      return { date : d3.timeParse("%Y-%m-%d")(d.date), newCases : d.newCasesRolling, newDeaths : d.newDeathsRolling }
     })
   ]).then(
     function(files) {
       plot_vaccines(files[0]);
-      plot_cases(files[1]);
+      plot_cases(files[1].map((e) => {return {date: e.date, value: e.newCases};}), "New Daily Cases");
+      states_date.set(state, [plot_cases, files]);
     }
   )
   
@@ -80,16 +81,6 @@ function plot_vaccinations(parent, state) {
     //   .style("font-size", "16px") 
     //   .style("font-family", "sans-serif")
     //   .text(`Effects of Vaccination on Reported Cases in ${state}`);
-    
-    svg.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0-margin.right)
-      .attr("x",0 - (height / 2))
-      .attr("dy", "1em")
-      .attr("text-anchor", "middle")
-      .style("font-size", "14px") 
-      .style("font-family", "sans-serif")
-      .text("New Daily Cases");
 
     svg.append("text")
       .attr("transform", "rotate(-90)")
@@ -102,7 +93,22 @@ function plot_vaccinations(parent, state) {
       .text("% population vaccinated");
     
     }
-  function plot_cases(data) {
+  function plot_cases(data, axisTitle) {
+    svg.selectChildren("path").remove();
+    svg.selectChildren("g#axisLeft").remove();
+    svg.selectChildren("text#axisLeftLabel").remove();
+    
+    svg.append("text")
+      .attr("id", "axisLeftLabel")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0-margin.right)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .attr("text-anchor", "middle")
+      .style("font-size", "14px") 
+      .style("font-family", "sans-serif")
+      .text(axisTitle);
+    
     // Add X axis --> it is a date format
     var x = d3.scaleTime()
       .domain(d3.extent(data, function(d) { return d.date; }))
@@ -114,6 +120,7 @@ function plot_vaccinations(parent, state) {
       // .domain([0, 300])
       .range([ height, 0 ]);
     svg.append("g")
+      .attr("id", "axisLeft")
       .call(d3.axisLeft(y));
   
     // Add the line
@@ -369,6 +376,8 @@ function draw_state(parent, state) {
 
 let states = ['MA', 'AM', 'PR', 'SP', 'MG', 'CE', 'DF', 'RS'];
 
+const states_date = new Map();
+
 for (const state of states) {
   parent = d3.select("#cases-graphs").append('div').classed('row', 'true').attr("id", state+"-graph").classed("mb-4", "true").classed("graph_row", "true");
   parent.append('div').classed('bottomright', 'true').append('p').text(state);
@@ -382,6 +391,38 @@ for (const state of states.sort()) {
   div.append("input").classed("form-check-input", 'true').attr("type", "checkbox").attr("id", state).attr("value", "").property("checked", "true").attr("onchange", "updateStates();");
   div.append("label").classed("form-check-label", 'true').attr("for", state).text(state);
 }
+
+let div = d3.select(".state-selection").append("div").classed("form-check", "true").classed("form-check-inline", "true");
+div.append('input')
+  .attr('type', 'radio')
+  .attr('value', 'Cases')
+  .attr('name', 'toggle')
+  .attr('checked', true)
+  .style('margin', '10px')
+  .on('click', function () {
+    for (const state of states) {
+      data = states_date.get(state);
+      data[0](data[1][1].map((e) => {return {date: e.date, value: e.newCases};}), "New Daily Cases");
+    }
+  });
+
+div.append('label')
+  .html('Cases');
+
+div.append('input')
+  .attr('type', 'radio')
+  .attr('value', 'Deaths')
+  .attr('name', 'toggle')
+  .style('margin', '10px')
+  .on('click', function () {
+    for (const state of states) {
+      data = states_date.get(state);
+      data[0](data[1][1].map((e) => {return {date: e.date, value: e.newDeaths};}), "New Daily Deaths");
+    }
+  });
+
+div.append('label')
+  .html('Deaths');
 
 function updateStates() {
   for (const state of states) {
