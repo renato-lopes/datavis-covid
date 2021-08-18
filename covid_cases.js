@@ -386,7 +386,7 @@ for (const state of states) {
   plot_vaccine_type(parent, state);
 }
 
-for (const state of states.sort()) {
+for (const state of states) {
   let div = d3.select(".state-selection").append("div").classed("form-check", "true").classed("form-check-inline", "true");
   div.append("input").classed("form-check-input", 'true').attr("type", "checkbox").attr("id", state).attr("value", "").property("checked", "true").attr("onchange", "updateStates();");
   div.append("label").classed("form-check-label", 'true').attr("for", state).text(state);
@@ -427,12 +427,33 @@ div.append('label')
   .html('Deaths');
 
 function updateStates() {
+  let none = true;
   for (const state of states) {
     if (d3.select("#"+state).property("checked") === true) {
-      console.log("#"+state+"-graph");
       d3.select("#"+state+"-graph").classed("d-md-none", false);
+      none = false;
     } else {
       d3.select("#"+state+"-graph").classed("d-md-none", true);
     }
   }
+  if (none) {
+    d3.select("#states-empty").classed("d-md-none", false);
+  } else {
+    d3.select("#states-empty").classed("d-md-none", true);
+  }
+}
+
+function selectAllStates() {
+  for (const state of states) {
+    d3.select("#"+state).property("checked", true);
+  }
+  updateStates();
+  console.log("all");
+}
+
+function selectNoStates() {
+  for (const state of states) {
+    d3.select("#"+state).property("checked", false);
+  }
+  updateStates();
 }
