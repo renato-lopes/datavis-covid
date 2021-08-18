@@ -74,11 +74,11 @@ function streamgraph(csvpath, csvpath2, title, caselabel, Ydomain, sg_id) {
     var stackedData = d3.stack()
       .offset(d3.stackOffsetSilhouette)
       .keys(keys)
-      (data)
+      (data2)
     var stackedData2 = d3.stack()
       .offset(d3.stackOffsetSilhouette)
       .keys(keys)
-      (data2)
+      (data)
 
     function transition() {
       var t;
@@ -94,7 +94,6 @@ function streamgraph(csvpath, csvpath2, title, caselabel, Ydomain, sg_id) {
       .attr('type', 'radio')
       .attr('value', ' Absolute')
       .attr('name', 'toggle')
-      .attr('checked', true)
       .style('margin', '10px')
       .on('click', function () {
         transition()
@@ -107,6 +106,7 @@ function streamgraph(csvpath, csvpath2, title, caselabel, Ydomain, sg_id) {
       .attr('type', 'radio')
       .attr('value', 'Avg')
       .attr('name', 'toggle')
+      .attr('checked', true)
       .style('margin', '10px')
       .on('click', function () {
         transition()
