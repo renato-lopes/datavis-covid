@@ -374,7 +374,7 @@ function draw_state(parent, state) {
   });
 }
 
-let states = ['MA', 'AM', 'PR', 'SP', 'MG', 'CE', 'DF', 'RS'];
+let states = ['MA', 'AM', 'RS', 'MG', 'CE', 'DF', 'PR', 'SP'];
 
 const states_date = new Map();
 

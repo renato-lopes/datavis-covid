@@ -48,43 +48,62 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-center">Look at this graph <a class="no-a" target="_blank" href="https://www.youtube.com/watch?v=sIlNIVXpIns">📈</a></h1>
-            </div>
-        </div>
-        <div class="row mb-4 mt-4">
-            <div class="col-md-6 state-selection">
-                Federative units:
-            </div>
-            <div class="col-md-3 cases-deaths-selection text-center"></div>
-            <div class="col-md-3 subtitle-selection">
-                <svg height="20" width="20">
-                    <circle cx="10" cy="10" r="5" fill="#69b3a2" />
-                </svg>
-                1ª Dose
-                <svg height="20" width="20">
-                    <circle cx="10" cy="10" r="5" fill="#0c7af0" />
-                </svg>
-                2ª Dose/Única
-                <!-- <div style="width: 15px; height: 15px; background-color: #69b3a2;"></div>1ª Dose
-                <div style="width: 15px; height: 15px; background-color: #0c7af0;"></div>2ª Dose/Única -->
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10 label-line text-center">Effects of Vaccination the COVID-19 Pandemic in Brazil</div>
-            <div class="col-md-2 label-vaccines text-center">% of vaccines types</div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-md-12" id="cases-graphs"></div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <p>* Rolling 7-day average of daily new cases and deaths.</p>
+            <div class="col-md-12 m-3">
+                <h1 class="text-center">Visualizing the COVID-19 Pandemic <a class="no-a" target="_blank" href="https://www.youtube.com/watch?v=sIlNIVXpIns">📈</a></h1>
+                <p>Data last updated on Aug 14, 2021.</p>
             </div>
         </div>
 
-        <div  id="streamgraph"></div>
-       
+        <div class="row">
+            <h2>Cases and Deaths per State Streamgraph</h2>
+            <div  id="streamgraph"></div>
+        </div>
+        <div class="row mt-5 mb-5">
+            <hr>
+        </div>
+        <div class="row">
+            <h2>Effects of Vaccination</h2>
+            <div class="row mb-4 mt-4">
+                <div class="col-md-6 state-selection">
+                    Federative units:
+                </div>
+                <div class="col-md-3 cases-deaths-selection text-center"></div>
+                <div class="col-md-3 subtitle-selection">
+                    <svg height="20" width="20">
+                        <circle cx="10" cy="10" r="5" fill="#69b3a2" />
+                    </svg>
+                    1ª Dose
+                    <svg height="20" width="20">
+                        <circle cx="10" cy="10" r="5" fill="#0c7af0" />
+                    </svg>
+                    2ª Dose/Única
+                    <!-- <div style="width: 15px; height: 15px; background-color: #69b3a2;"></div>1ª Dose
+                    <div style="width: 15px; height: 15px; background-color: #0c7af0;"></div>2ª Dose/Única -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 label-line text-center">Effects of Vaccination the COVID-19 Pandemic in Brazil</div>
+                <div class="col-md-2 label-vaccines text-center">% of vaccines types</div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12" id="cases-graphs"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>* Rolling 7-day average of daily new cases and deaths.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3 mb-3">
+            <hr>
+        </div>
+        <div class="row">
+            <p>Data Source:</p>
+            <ul>
+                <li><a target="_blank" href="https://github.com/wcota/covid19br/">https://github.com/wcota/covid19br/</a></li>
+                <li><a target="_blank" href="https://opendatasus.saude.gov.br/dataset/covid-19-vacinacao">https://opendatasus.saude.gov.br/dataset/covid-19-vacinacao</a></li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>
