@@ -392,39 +392,19 @@ for (const state of states) {
   div.append("label").classed("form-check-label", 'true').attr("for", state).text(state);
 }
 
-let div = d3.select(".cases-deaths-selection").append("div").classed("form-check", "true").classed("form-check-inline", "true");
-div.append('input')
-  .attr('type', 'radio')
-  .attr('value', 'Cases')
-  .attr('name', 'toggle')
-  .attr('checked', true)
-  .style('margin-left', '10px')
-  .style('margin-right', '10px')
-  .on('click', function () {
-    for (const state of states) {
-      data = states_date.get(state);
-      data[0](data[1][1].map((e) => {return {date: e.date, value: e.newCases};}), "New Daily Cases");
-    }
-  });
+function displayCases() {
+  for (const state of states) {
+    data = states_date.get(state);
+    data[0](data[1][1].map((e) => {return {date: e.date, value: e.newCases};}), "New Daily Cases");
+  }
+}
 
-div.append('label')
-  .html('Cases');
-
-div.append('input')
-  .attr('type', 'radio')
-  .attr('value', 'Deaths')
-  .attr('name', 'toggle')
-  .style('margin-left', '10px')
-  .style('margin-right', '10px')
-  .on('click', function () {
-    for (const state of states) {
-      data = states_date.get(state);
-      data[0](data[1][1].map((e) => {return {date: e.date, value: e.newDeaths};}), "New Daily Deaths");
-    }
-  });
-
-div.append('label')
-  .html('Deaths');
+function displayDeaths() {
+  for (const state of states) {
+    data = states_date.get(state);
+    data[0](data[1][1].map((e) => {return {date: e.date, value: e.newDeaths};}), "New Daily Deaths");
+  }
+}
 
 function updateStates() {
   let none = true;
