@@ -392,13 +392,14 @@ for (const state of states.sort()) {
   div.append("label").classed("form-check-label", 'true').attr("for", state).text(state);
 }
 
-let div = d3.select(".state-selection").append("div").classed("form-check", "true").classed("form-check-inline", "true");
+let div = d3.select(".cases-deaths-selection").append("div").classed("form-check", "true").classed("form-check-inline", "true");
 div.append('input')
   .attr('type', 'radio')
   .attr('value', 'Cases')
   .attr('name', 'toggle')
   .attr('checked', true)
-  .style('margin', '10px')
+  .style('margin-left', '10px')
+  .style('margin-right', '10px')
   .on('click', function () {
     for (const state of states) {
       data = states_date.get(state);
@@ -413,7 +414,8 @@ div.append('input')
   .attr('type', 'radio')
   .attr('value', 'Deaths')
   .attr('name', 'toggle')
-  .style('margin', '10px')
+  .style('margin-left', '10px')
+  .style('margin-right', '10px')
   .on('click', function () {
     for (const state of states) {
       data = states_date.get(state);
