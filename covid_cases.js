@@ -343,7 +343,7 @@ function draw_state(parent, state) {
       var states_contour = topojson.mesh(data, data.objects.estados);
 
       var projection = d3.geoMercator()
-          .scale(200)
+          .scale(220)
           .center([-52, -15])
           .translate([width / 2, height / 2]);
       
@@ -380,7 +380,7 @@ const states_date = new Map();
 
 for (const state of states) {
   parent = d3.select("#cases-graphs").append('div').classed('row', 'true').attr("id", state+"-graph").classed("mb-4", "true").classed("graph_row", "true");
-  parent.append('div').classed('bottomright', 'true').append('p').text(state);
+  parent.append('div').classed('topleft', 'true').append('p').text(state);
   draw_state(parent, state);
   plot_vaccinations(parent, state);
   plot_vaccine_type(parent, state);
